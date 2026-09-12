@@ -13,7 +13,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Center(
-          child: Text('Welcome to Flutverse! to al user You are most welcome'),
+          child: Text('Welcome to Flutverse! g to al user You are most welcome'),
         ),
       ),
     );
