@@ -3,7 +3,7 @@ name: Deploy Flutter Web
 on:
   push:
     branches:
-      - main # Change to 'master' if your main branch is named master
+      - main # আপনার মূল ব্রাঞ্চ যদি master হয় তবে main কেটে master লিখুন
 
 permissions:
   contents: read

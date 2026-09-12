@@ -11,11 +11,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Text('Welcome to Flutverse! to al user You are most welcome'),
-        ),
-      ),
+      home: Scaffold(body: Center(child: Text('Updated'))),
     );
   }
 }
