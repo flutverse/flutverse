@@ -38,8 +38,8 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      - name: Build Web (No PWA Caching)
-        run: flutter build web --release --pwa-strategy=none
+      - name: Build Web
+        run: flutter build web --release --pwa-strategy=none --base-href "/"
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
