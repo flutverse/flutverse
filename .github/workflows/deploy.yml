@@ -1,9 +1,9 @@
-name: Deploy Flutter Web
+name: Deploy Flutter Web to GitHub Pages
 
 on:
   push:
-    branches:
-      - main # আপনার মূল ব্রাঞ্চ যদি master হয় তবে main কেটে master লিখুন
+    branches: [ main ]      # change if your default branch differs
+  workflow_dispatch:         # lets you trigger manually too
 
 permissions:
   contents: read
@@ -11,41 +11,34 @@ permissions:
   id-token: write
 
 concurrency:
-  group: 'pages'
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - run: flutter pub get
+
+      # IMPORTANT: base-href must match how the site is served (see step 4)
+      - run: flutter build web --release --base-href "/"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
   deploy:
+    needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: '17'
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-
-      - name: Install Dependencies
-        run: flutter pub get
-
-      - name: Build Web
-        run: flutter build web --release --pwa-strategy=none --base-href "/"
-
-      - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: 'build/web'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - id: deployment
         uses: actions/deploy-pages@v4
