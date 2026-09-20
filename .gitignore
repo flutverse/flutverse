@@ -1,0 +1,13 @@
+# Build outputs
+build/
+.dart_tool/
+.dart_tool_flutter_gen/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# OS/editor junk
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+.vscode/
