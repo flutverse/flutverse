@@ -4,6 +4,9 @@ build/
 .dart_tool_flutter_gen/
 .flutter-plugins
 .flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
 
 # OS/editor junk
 .DS_Store
@@ -11,3 +14,7 @@ Thumbs.db
 .idea/
 *.iml
 .vscode/
+
+# Flutter/Dart extras
+*.log
+coverage/
