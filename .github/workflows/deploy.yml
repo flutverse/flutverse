@@ -2,23 +2,24 @@ name: Deploy Flutter Web to GitHub Pages
 
 on:
   push:
-    branches: [ main ]      # change if your default branch differs
-  workflow_dispatch:         # lets you trigger manually too
+    branches: [ main ]        # আপনার default branch অন্য হলে বদলান (যেমন master)
+  workflow_dispatch:           # ম্যানুয়ালি চালানোর অপশন
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# একাধিক run একসাথে পড়লে বাতিল না করে অপেক্ষা করবে
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: subosito/flutter-action@v2
         with:
@@ -26,7 +27,7 @@ jobs:
 
       - run: flutter pub get
 
-      # IMPORTANT: base-href must match how the site is served (see step 4)
+      # root ডোমেইনে সার্ভ হচ্ছে বলে base-href "/" ঠিক আছে
       - run: flutter build web --release --base-href "/"
 
       - uses: actions/upload-pages-artifact@v3
@@ -35,7 +36,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
